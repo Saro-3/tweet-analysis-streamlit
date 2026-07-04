@@ -7,10 +7,12 @@ import pandas as pd
 # Set up the page
 st.set_page_config(page_title='Sentiment Analysis', 
                    layout="wide",
-                   page_icon="Logo_of_Twitter.svg(1).jpg",
+                   page_icon="assets/logo/twitter-logo.jpg",
                    )
-st.header('Sentiment Analysis 😊 😞 😐')
-st.subheader('Classifying Tweets as Positive, Negative, or Neutral')
+st.title('🐦Sentiment Analysis')
+st.markdown(
+    "Analyze tweets and classify them into **Positive**, **Negative**, or **Neutral** sentiments."
+)
 
 df = search_file()
 

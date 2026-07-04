@@ -1,26 +1,17 @@
-# Virtual environment
+# Virtual Environment
 .venv/
 venv/
 
-# Python cache
+# Python Cache
 __pycache__/
-*.pyc
+*.py[cod]
 
-# Environment variables
+# Environment Variables
 .env
 
-# Streamlit cache
+# Streamlit Cache
 .streamlit/
 
-# OS files
-.DS_Store
-Thumbs.db
-
-.venv/
-venv/
-__pycache__/
-*.pyc
-.env
-.streamlit/
+# Operating System Files
 .DS_Store
 Thumbs.db
