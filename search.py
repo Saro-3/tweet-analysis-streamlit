@@ -3,6 +3,8 @@ from textblob import TextBlob
 import chardet
 import streamlit as st
 
+from xquik_export import TEXT_FIELDS, load_xquik_tweets
+
 
 # Define sentiment scoring functions
 def score(x):
@@ -48,10 +50,20 @@ def search_file():
     # Create an expander for the file uploader
     with st.expander("Upload a file"):
         # File uploader
-        uploaded_file = st.file_uploader("Choose a file", type=["csv"])
+        uploaded_file = st.file_uploader("Choose a file", type=["csv", "json", "jsonl"])
 
     if uploaded_file is not None:
-        df = load_data(uploaded_file)
+        file_name = uploaded_file.name.lower()
+        if file_name.endswith((".json", ".jsonl")):
+            tweets = load_xquik_tweets(uploaded_file.getvalue())
+            df = pd.DataFrame({"Tweets": tweets})
+        else:
+            df = load_data(uploaded_file)
+
+        if "Tweets" not in df.columns:
+            text_column = next((field for field in TEXT_FIELDS if field in df.columns), None)
+            if text_column is not None:
+                df["Tweets"] = df[text_column]
 
         # Print column names
         st.write(f"Columns in the dataframe: {df.columns.tolist()}")
