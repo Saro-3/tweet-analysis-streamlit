@@ -7,7 +7,7 @@ import pandas as pd
 # Set up the page
 st.set_page_config(page_title='Sentiment Analysis', 
                    layout="wide",
-                   page_icon="assets/logo/twitter-logo.jpg",
+                   page_icon="assets/logo/twitter-logo.png",
                    )
 st.title('🐦Sentiment Analysis')
 st.markdown(
@@ -31,13 +31,19 @@ if df is not None:
                    color_discrete_sequence=colors)
     st.plotly_chart(pie_chart)
 
-   # Create and display a line chart using px.line
-    line_chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["Positive", "Neutral", "Negative"])
+    # Create and display a line chart from the uploaded data
+    line_chart_data = (
+        df["analysis"]
+        .value_counts()
+        .rename_axis("analysis")
+        .reset_index(name="count")
+    )
     line_chart = px.line(line_chart_data,
-                        x=line_chart_data.index,
-                        y=['Positive', 'Neutral', 'Negative'],
+                        x="analysis",
+                        y="count",
+                        markers=True,
                         color_discrete_sequence=colors)  # Specify each column individually
     line_chart.update_layout(title_text='Sentiment Analysis Distribution')
     line_chart.update_xaxes(title_text='Sentiment')
-    line_chart.update_yaxes(title_text='Score')
+    line_chart.update_yaxes(title_text='Tweet count')
     st.plotly_chart(line_chart)
